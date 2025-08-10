@@ -7,18 +7,49 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>Course Materials Assistant</title>
-    <link rel="stylesheet" href="style.css?v=9">
+    <link rel="stylesheet" href="style.css?v=10">
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Course Materials Assistant</h1>
-            <p class="subtitle">Ask questions about courses, instructors, and content</p>
+        <header class="app-header">
+            <div class="header-content">
+                <div class="branding">
+                    <div class="logo">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                            <line x1="12" y1="22.08" x2="12" y2="12"/>
+                        </svg>
+                    </div>
+                    <div class="header-text">
+                        <h1>Course Materials Assistant</h1>
+                        <p class="subtitle">AI-powered course content exploration</p>
+                    </div>
+                </div>
+                <div class="header-status">
+                    <div class="status-indicator online" id="statusIndicator">
+                        <div class="status-dot"></div>
+                        <span class="status-text">Online</span>
+                    </div>
+                    <div class="help-button" id="helpButton" title="How to use this assistant">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="m9 9 3-3 3 3"/>
+                            <path d="M9 15h6"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
         </header>
 
         <div class="main-content">
             <!-- Left Sidebar -->
             <aside class="sidebar">
+                <!-- New Chat Button -->
+                <div class="sidebar-section new-chat-section">
+                    <button id="newChatButton" class="new-chat-button">+ NEW CHAT</button>
+                </div>
+
                 <!-- Course Stats -->
                 <div class="sidebar-section">
                     <details class="stats-collapsible">
@@ -39,13 +70,33 @@
 
                 <!-- Suggested Questions -->
                 <div class="sidebar-section">
-                    <details class="suggested-collapsible">
-                        <summary class="suggested-header">Try asking:</summary>
-                        <div class="suggested-items">
-                            <button class="suggested-item" data-question="What is the outline of the &quot;MCP: Build Rich-Context AI Apps with Anthropic&quot; course?">Outline of a course</button>
-                            <button class="suggested-item" data-question="Are there any courses that include a Chatbot implementation?">Courses about Chatbot</button>
-                            <button class="suggested-item" data-question="Are there any courses that explain what RAG is?">Courses explaining RAG</button>
-                            <button class="suggested-item" data-question="What was covered in lesson 5 of the MCP course?">Details of a course's lesson</button>
+                    <details class="suggested-collapsible" open>
+                        <summary class="suggested-header">💡 Quick Starts:</summary>
+                        <div class="suggested-categories">
+                            <div class="suggestion-category">
+                                <h4 class="category-title">🎯 Course Overview</h4>
+                                <div class="category-items">
+                                    <button class="suggested-item" data-question="What is the outline of the &quot;MCP: Build Rich-Context AI Apps with Anthropic&quot; course?">Course outline</button>
+                                    <button class="suggested-item" data-question="Compare all the available courses and their focus areas">Compare courses</button>
+                                </div>
+                            </div>
+                            
+                            <div class="suggestion-category">
+                                <h4 class="category-title">🔍 Topic Search</h4>
+                                <div class="category-items">
+                                    <button class="suggested-item" data-question="Are there any courses that include a Chatbot implementation?">Chatbot topics</button>
+                                    <button class="suggested-item" data-question="Are there any courses that explain what RAG is?">RAG concepts</button>
+                                    <button class="suggested-item" data-question="What courses cover AI and machine learning?">AI/ML content</button>
+                                </div>
+                            </div>
+                            
+                            <div class="suggestion-category">
+                                <h4 class="category-title">📚 Lesson Details</h4>
+                                <div class="category-items">
+                                    <button class="suggested-item" data-question="What was covered in lesson 5 of the MCP course?">Specific lesson</button>
+                                    <button class="suggested-item" data-question="What are the key takeaways from the Advanced Retrieval course?">Course takeaways</button>
+                                </div>
+                            </div>
                         </div>
                     </details>
                 </div>
@@ -76,6 +127,6 @@
 
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="script.js?v=9"></script>
+    <script src="script.js?v=10"></script>
 </body>
 </html>

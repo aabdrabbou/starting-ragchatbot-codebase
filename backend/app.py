@@ -40,10 +40,15 @@ class QueryRequest(BaseModel):
     query: str
     session_id: Optional[str] = None
 
+class SourceInfo(BaseModel):
+    """Model for source information with optional links"""
+    text: str
+    link: Optional[str] = None
+
 class QueryResponse(BaseModel):
     """Response model for course queries"""
     answer: str
-    sources: List[str]
+    sources: List[SourceInfo]
     session_id: str
 
 class CourseStats(BaseModel):
@@ -65,9 +70,22 @@ async def query_documents(request: QueryRequest):
         # Process query using RAG system
         answer, sources = rag_system.query(request.query, session_id)
         
+        # Convert sources to SourceInfo objects
+        source_objects = []
+        for source in sources:
+            if isinstance(source, dict):
+                # New format with text and link
+                source_objects.append(SourceInfo(
+                    text=source.get("text", ""),
+                    link=source.get("link")
+                ))
+            else:
+                # Backward compatibility: treat as plain text
+                source_objects.append(SourceInfo(text=str(source), link=None))
+        
         return QueryResponse(
             answer=answer,
-            sources=sources,
+            sources=source_objects,
             session_id=session_id
         )
     except Exception as e:
@@ -89,6 +107,7 @@ async def get_course_stats():
 async def startup_event():
     """Load initial documents on startup"""
     docs_path = "../docs"
+    print(f"Startup event triggered. Docs path exists: {os.path.exists(docs_path)}")
     if os.path.exists(docs_path):
         print("Loading initial documents...")
         try:
@@ -96,6 +115,7 @@ async def startup_event():
             print(f"Loaded {courses} courses with {chunks} chunks")
         except Exception as e:
             print(f"Error loading documents: {e}")
+    print("Startup completed")
 
 # Custom static file handler with no-cache headers for development
 from fastapi.staticfiles import StaticFiles

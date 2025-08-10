@@ -139,23 +139,27 @@ class VectorStore:
         course_text = course.title
         
         # Build lessons metadata and serialize as JSON string
+        # Handle None values in lesson links
         lessons_metadata = []
         for lesson in course.lessons:
             lessons_metadata.append({
                 "lesson_number": lesson.lesson_number,
                 "lesson_title": lesson.title,
-                "lesson_link": lesson.lesson_link
+                "lesson_link": lesson.lesson_link if lesson.lesson_link is not None else ""
             })
+        
+        # ChromaDB doesn't allow None values in metadata, so provide defaults
+        metadata = {
+            "title": course.title,
+            "instructor": course.instructor if course.instructor is not None else "",
+            "course_link": course.course_link if course.course_link is not None else "",
+            "lessons_json": json.dumps(lessons_metadata),  # Serialize as JSON string
+            "lesson_count": len(course.lessons)
+        }
         
         self.course_catalog.add(
             documents=[course_text],
-            metadatas=[{
-                "title": course.title,
-                "instructor": course.instructor,
-                "course_link": course.course_link,
-                "lessons_json": json.dumps(lessons_metadata),  # Serialize as JSON string
-                "lesson_count": len(course.lessons)
-            }],
+            metadatas=[metadata],
             ids=[course.title]
         )
     
@@ -167,7 +171,7 @@ class VectorStore:
         documents = [chunk.content for chunk in chunks]
         metadatas = [{
             "course_title": chunk.course_title,
-            "lesson_number": chunk.lesson_number,
+            "lesson_number": chunk.lesson_number if chunk.lesson_number is not None else 0,
             "chunk_index": chunk.chunk_index
         } for chunk in chunks]
         # Use title with chunk index for unique IDs
@@ -264,4 +268,4 @@ class VectorStore:
             return None
         except Exception as e:
             print(f"Error getting lesson link: {e}")
-    
+            return None

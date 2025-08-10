@@ -29,7 +29,7 @@ uv add package_name
 ### Environment Setup
 Create a `.env` file in the root directory with:
 ```
-ANTHROPIC_API_KEY=your_anthropic_api_key_here
+ANTHROPIC_API_KEY=
 ```
 
 ## Architecture
