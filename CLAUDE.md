@@ -26,6 +26,25 @@ uv sync
 uv add package_name
 ```
 
+### Code Quality Tools
+```bash
+# Format code automatically
+./scripts/format_code.sh
+
+# Run quality checks (formatting and linting)
+./scripts/quality_check.sh
+
+# Manual formatting with Black
+uv run black backend/ main.py
+
+# Manual linting with Ruff
+uv run ruff check backend/ main.py
+uv run ruff check --fix backend/ main.py  # Auto-fix issues
+
+# Format with Ruff
+uv run ruff format backend/ main.py
+```
+
 ### Environment Setup
 Create a `.env` file in the root directory with:
 ```
